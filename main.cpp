@@ -4,45 +4,37 @@
 
 using namespace std;
 
-void playRockPaperScissors() {
-    string choices[] = {"Rock", "Paper", "Scissors"};
-    srand(time(0));
-    
-    char playerChoice;
-    int computerChoice;
-    
-    cout << "Welcome to Rock, Paper, Scissors!" << endl;
-    cout << "Enter R for Rock, P for Paper, or S for Scissors: ";
-    cin >> playerChoice;
-    
-    playerChoice = toupper(playerChoice);
-    computerChoice = rand() % 3;
-    
-    cout << "Computer chose: " << choices[computerChoice] << endl;
-    
-    if ((playerChoice == 'R' && computerChoice == 2) ||
-        (playerChoice == 'P' && computerChoice == 0) ||
-        (playerChoice == 'S' && computerChoice == 1)) {
-        cout << "You win!" << endl;
-    } else if ((playerChoice == 'R' && computerChoice == 0) ||
-               (playerChoice == 'P' && computerChoice == 1) ||
-               (playerChoice == 'S' && computerChoice == 2)) {
-        cout << "It's a tie!" << endl;
-    } else {
-        cout << "You lose!" << endl;
-    }
-}
-
 int main() {
-    char choice;
-    do {
-        playRockPaperScissors();
-        cout << "Do you want to play again? (y/n): ";
-        cin >> choice;
-    } while (choice == 'y' || choice == 'Y');
-    
-    cout << "Thanks for playing!" << endl;
+    // Seed for random number generation
+    srand(static_cast<unsigned int>(time(0)));
+
+    int lower = 1, upper = 100;
+    int targetNumber = rand() % (upper - lower + 1) + lower; // Random number between 1 and 100
+    int userGuess;
+    int maxAttempts = 10; // Limit number of attempts
+    int attempts = 0;
+
+    cout << "Welcome to the Number Guessing Game!" << endl;
+    cout << "You have " << maxAttempts << " attempts to guess the number between " << lower << " and " << upper << "." << endl;
+
+    while (attempts < maxAttempts) {
+        cout << "Attempt " << attempts + 1 << " of " << maxAttempts << ". Enter your guess: ";
+        cin >> userGuess;
+        attempts++;
+
+        if (userGuess > targetNumber) {
+            cout << "Too high! Try again." << endl;
+        } else if (userGuess < targetNumber) {
+            cout << "Too low! Try again." << endl;
+        } else {
+            cout << "Congratulations! You've guessed the correct number " << targetNumber << " in " << attempts << " attempts." << endl;
+            break; // Exit the loop once the correct number is guessed
+        }
+        
+        if (attempts == maxAttempts) {
+            cout << "Sorry, you've used all your attempts. The correct number was " << targetNumber << "." << endl;
+        }
+    }
+
     return 0;
 }
-
-
